@@ -658,17 +658,21 @@ services:
         - /var/run/docker.sock:/var/run/docker.sock:ro
         - /lib/modules:/lib/modules:ro
 
+# networks:
+#   mailcow-network:
+#     driver: bridge
+#     driver_opts:
+#       com.docker.network.bridge.name: br-mailcow-setup   # <- unique name
+#     enable_ipv6: false                                    # <- turn off IPv6
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: ${IPV4_NETWORK:-172.31.5}.0/24          # <- your free /24 
+
 networks:
   mailcow-network:
-    driver: bridge
-    driver_opts:
-      com.docker.network.bridge.name: br-mailcow-setup   # <- unique name
-    enable_ipv6: false                                    # <- turn off IPv6
-    ipam:
-      driver: default
-      config:
-        - subnet: ${IPV4_NETWORK:-172.31.5}.0/24          # <- your free /24
-
+    external: true
+    name: mailcow-net-external
 
 
 volumes:
